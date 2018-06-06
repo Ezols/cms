@@ -2,6 +2,8 @@
 
 use App\User;
 use App\Post;
+use App\Role;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // get one user post - One to One relationship 
-Route::get('/user/post/{id}', function($id) 
+Route::get('/user/post/{id}', function($id)
 {
     $title =  User::find($id)->post->title;
     $content =  User::find($id)->post->content;
@@ -48,5 +50,32 @@ Route::get('/posts', function()
         echo "ID: " . $post->id . "<br>";
         echo "Title: " . $post->title . "<br>";
         echo "Content: " . $post->content . "<br>";
+    }
+});
+
+// get users role - Many to Many relationship
+Route::get('/user/{id}/role', function($id)
+{
+    $user = User::find($id)->roles()->get();
+    return $user;
+
+    // $user = User::find($id);  
+  
+    // foreach($user->roles as $role)
+    // {
+    //     return $role->name;
+    // }
+
+});
+
+// Accessing intermediate table / pivot
+
+Route::get('/user/pivot', function()
+{
+    $user = User::find(1);
+
+    foreach($user->roles as $role)
+    {
+        echo $role->pivot->created_at;
     }
 });

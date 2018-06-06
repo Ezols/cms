@@ -39,4 +39,16 @@ class User extends Authenticatable
 
         return $this->hasMany('App\Post');
     }
+
+    // Many to Many relationship
+    // pivot table = role_users
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role')->withPivot('created_at');
+
+        // You can define which collumn and ID it has to lookup
+        // return $this->belongsToMany('App\Role', 'role_user', 'user_id');
+    }
+
 }
