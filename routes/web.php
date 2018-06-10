@@ -79,3 +79,8 @@ Route::get('/user/pivot', function()
         echo $role->pivot->created_at;
     }
 });
+
+Route::get('', function()
+{
+
+});
